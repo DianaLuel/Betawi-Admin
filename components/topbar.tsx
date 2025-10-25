@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import { Menu, Bell, User } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import Image from "next/image"
+import { Menu, Bell, User } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 interface TopbarProps {
-  onMenuClick: () => void
+  onMenuClick: () => void;
 }
 
 export function Topbar({ onMenuClick }: TopbarProps) {
@@ -14,10 +14,15 @@ export function Topbar({ onMenuClick }: TopbarProps) {
       <div className="flex items-center justify-between px-6 py-4">
         {/* Left: Menu Button and Logo */}
         <div className="flex items-center gap-4">
-          <Button variant="ghost" size="icon" onClick={onMenuClick} className="text-foreground">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={onMenuClick}
+            className="text-foreground"
+          >
             <Menu className="w-5 h-5" />
           </Button>
-          <Image src="/betawi-logo.webp" alt="Betawi Logo" width={40} height={40} className="h-10 w-auto" />
+          {/* <Image src="/betawi-logo.webp" alt="Betawi Logo" width={40} height={40} className="h-10 w-auto" /> */}
         </div>
 
         <div className="flex-1"></div>
@@ -33,5 +38,5 @@ export function Topbar({ onMenuClick }: TopbarProps) {
         </div>
       </div>
     </header>
-  )
+  );
 }
