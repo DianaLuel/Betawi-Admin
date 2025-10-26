@@ -1,63 +1,72 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Mail, Lock, Eye, EyeOff } from "lucide-react"
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 
 export default function LoginPage() {
-  const router = useRouter()
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [showPassword, setShowPassword] = useState(false)
-  const [error, setError] = useState("")
-  const [loading, setLoading] = useState(false)
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError("")
-    setLoading(true)
+    e.preventDefault();
+    setError("");
+    setLoading(true);
 
     if (!email || !password) {
-      setError("Please fill in all fields")
-      setLoading(false)
-      return
+      setError("Please fill in all fields");
+      setLoading(false);
+      return;
     }
 
     if (!email.includes("@")) {
-      setError("Please enter a valid email")
-      setLoading(false)
-      return
+      setError("Please enter a valid email");
+      setLoading(false);
+      return;
     }
 
     // Simulate login delay
     setTimeout(() => {
       // Store auth state (in production, use proper auth)
-      localStorage.setItem("adminAuth", JSON.stringify({ email, loggedIn: true }))
-      router.push("/")
-      setLoading(false)
-    }, 500)
-  }
+      localStorage.setItem(
+        "adminAuth",
+        JSON.stringify({ email, loggedIn: true })
+      );
+      router.push("/");
+      setLoading(false);
+    }, 500);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/5 to-secondary/5 flex items-center justify-center p-4">
       <Card className="w-full max-w-md shadow-lg">
         <CardHeader className="text-center pb-2">
           <div className="flex justify-center mb-4">
-            <img src="/logo.webp" alt="Betawi" className="h-16 w-auto" />
+            <img src="/betawi-logo.webp" alt="Betawi" className="h-20 w-auto" />
           </div>
-          <CardTitle className="text-2xl text-foreground">Admin Login</CardTitle>
-          <p className="text-sm text-muted-foreground mt-2">Sign in to your Betawi admin account</p>
+          <CardTitle className="text-2xl text-foreground">
+            Admin Login
+          </CardTitle>
+          <p className="text-sm text-muted-foreground mt-2">
+            Sign in to your Betawi admin account
+          </p>
         </CardHeader>
 
         <CardContent>
           <form onSubmit={handleLogin} className="space-y-4">
             {/* Email Field */}
             <div>
-              <label className="block text-sm font-medium text-foreground mb-2">Email Address</label>
+              <label className="block text-sm font-medium text-foreground mb-2">
+                Email Address
+              </label>
               <div className="relative">
                 <Mail className="absolute left-3 top-3 w-5 h-5 text-muted-foreground" />
                 <input
@@ -72,7 +81,9 @@ export default function LoginPage() {
 
             {/* Password Field */}
             <div>
-              <label className="block text-sm font-medium text-foreground mb-2">Password</label>
+              <label className="block text-sm font-medium text-foreground mb-2">
+                Password
+              </label>
               <div className="relative">
                 <Lock className="absolute left-3 top-3 w-5 h-5 text-muted-foreground" />
                 <input
@@ -87,14 +98,20 @@ export default function LoginPage() {
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-3 text-muted-foreground hover:text-foreground"
                 >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  {showPassword ? (
+                    <EyeOff className="w-5 h-5" />
+                  ) : (
+                    <Eye className="w-5 h-5" />
+                  )}
                 </button>
               </div>
             </div>
 
             {/* Error Message */}
             {error && (
-              <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">{error}</div>
+              <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">
+                {error}
+              </div>
             )}
 
             {/* Login Button */}
@@ -112,7 +129,9 @@ export default function LoginPage() {
                 <div className="w-full border-t border-border"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-muted-foreground">Don't have an account?</span>
+                <span className="px-2 bg-white text-muted-foreground">
+                  Don't have an account?
+                </span>
               </div>
             </div>
 
@@ -129,12 +148,14 @@ export default function LoginPage() {
 
           {/* Demo Credentials */}
           <div className="mt-6 p-3 bg-secondary/50 rounded-lg text-xs text-muted-foreground">
-            <p className="font-medium text-foreground mb-1">Demo Credentials:</p>
+            <p className="font-medium text-foreground mb-1">
+              Demo Credentials:
+            </p>
             <p>Email: admin@betawi.com</p>
             <p>Password: any password</p>
           </div>
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

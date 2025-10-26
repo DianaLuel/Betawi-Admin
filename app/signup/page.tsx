@@ -1,84 +1,102 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Mail, Lock, User, Eye, EyeOff, ArrowLeft } from "lucide-react"
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Mail, Lock, User, Eye, EyeOff, ArrowLeft } from "lucide-react";
 
 export default function SignupPage() {
-  const router = useRouter()
+  const router = useRouter();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
-  })
-  const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const [error, setError] = useState("")
-  const [loading, setLoading] = useState(false)
+  });
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSignup = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError("")
-    setLoading(true)
+    e.preventDefault();
+    setError("");
+    setLoading(true);
 
-    if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
-      setError("Please fill in all fields")
-      setLoading(false)
-      return
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.password ||
+      !formData.confirmPassword
+    ) {
+      setError("Please fill in all fields");
+      setLoading(false);
+      return;
     }
 
     if (!formData.email.includes("@")) {
-      setError("Please enter a valid email")
-      setLoading(false)
-      return
+      setError("Please enter a valid email");
+      setLoading(false);
+      return;
     }
 
     if (formData.password.length < 6) {
-      setError("Password must be at least 6 characters")
-      setLoading(false)
-      return
+      setError("Password must be at least 6 characters");
+      setLoading(false);
+      return;
     }
 
     if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match")
-      setLoading(false)
-      return
+      setError("Passwords do not match");
+      setLoading(false);
+      return;
     }
 
     // Simulate signup delay
     setTimeout(() => {
-      localStorage.setItem("adminAuth", JSON.stringify({ email: formData.email, name: formData.name, loggedIn: true }))
-      router.push("/")
-      setLoading(false)
-    }, 500)
-  }
+      localStorage.setItem(
+        "adminAuth",
+        JSON.stringify({
+          email: formData.email,
+          name: formData.name,
+          loggedIn: true,
+        })
+      );
+      router.push("/");
+      setLoading(false);
+    }, 500);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/5 to-secondary/5 flex items-center justify-center p-4">
       <Card className="w-full max-w-md shadow-lg">
         <CardHeader className="text-center pb-2">
           <div className="flex justify-center mb-4">
-            <img src="/logo.webp" alt="Betawi" className="h-16 w-auto" />
+            <img src="/betawi-logo.webp" alt="Betawi" className="h-20 w-auto" />
           </div>
-          <CardTitle className="text-2xl text-foreground">Create Admin Account</CardTitle>
-          <p className="text-sm text-muted-foreground mt-2">Register as a Betawi administrator</p>
+          <CardTitle className="text-2xl text-foreground">
+            Create Admin Account
+          </CardTitle>
+          <p className="text-sm text-muted-foreground mt-2">
+            Register as a Betawi administrator
+          </p>
         </CardHeader>
 
         <CardContent>
           <form onSubmit={handleSignup} className="space-y-4">
             {/* Name Field */}
             <div>
-              <label className="block text-sm font-medium text-foreground mb-2">Full Name</label>
+              <label className="block text-sm font-medium text-foreground mb-2">
+                Full Name
+              </label>
               <div className="relative">
                 <User className="absolute left-3 top-3 w-5 h-5 text-muted-foreground" />
                 <input
@@ -94,7 +112,9 @@ export default function SignupPage() {
 
             {/* Email Field */}
             <div>
-              <label className="block text-sm font-medium text-foreground mb-2">Email Address</label>
+              <label className="block text-sm font-medium text-foreground mb-2">
+                Email Address
+              </label>
               <div className="relative">
                 <Mail className="absolute left-3 top-3 w-5 h-5 text-muted-foreground" />
                 <input
@@ -110,7 +130,9 @@ export default function SignupPage() {
 
             {/* Password Field */}
             <div>
-              <label className="block text-sm font-medium text-foreground mb-2">Password</label>
+              <label className="block text-sm font-medium text-foreground mb-2">
+                Password
+              </label>
               <div className="relative">
                 <Lock className="absolute left-3 top-3 w-5 h-5 text-muted-foreground" />
                 <input
@@ -126,14 +148,20 @@ export default function SignupPage() {
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-3 text-muted-foreground hover:text-foreground"
                 >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  {showPassword ? (
+                    <EyeOff className="w-5 h-5" />
+                  ) : (
+                    <Eye className="w-5 h-5" />
+                  )}
                 </button>
               </div>
             </div>
 
             {/* Confirm Password Field */}
             <div>
-              <label className="block text-sm font-medium text-foreground mb-2">Confirm Password</label>
+              <label className="block text-sm font-medium text-foreground mb-2">
+                Confirm Password
+              </label>
               <div className="relative">
                 <Lock className="absolute left-3 top-3 w-5 h-5 text-muted-foreground" />
                 <input
@@ -149,14 +177,20 @@ export default function SignupPage() {
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   className="absolute right-3 top-3 text-muted-foreground hover:text-foreground"
                 >
-                  {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  {showConfirmPassword ? (
+                    <EyeOff className="w-5 h-5" />
+                  ) : (
+                    <Eye className="w-5 h-5" />
+                  )}
                 </button>
               </div>
             </div>
 
             {/* Error Message */}
             {error && (
-              <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">{error}</div>
+              <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">
+                {error}
+              </div>
             )}
 
             {/* Signup Button */}
@@ -182,5 +216,5 @@ export default function SignupPage() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
